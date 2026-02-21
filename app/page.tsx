@@ -1,86 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Home() {
 
 const [symbol,setSymbol] = useState("NSE:NIFTY");
 
-useEffect(()=>{
-
-document.getElementById("chart")!.innerHTML="";
-
-const script = document.createElement("script");
-
-script.src="https://s3.tradingview.com/tv.js";
-
-script.async=true;
-
-script.onload=()=>{
-
-// @ts-ignore
-new TradingView.widget({
-
-width:"100%",
-
-height:600,
-
-symbol:symbol,
-
-interval:"5",
-
-timezone:"Asia/Kolkata",
-
-theme:"dark",
-
-style:"1",
-
-locale:"en",
-
-allow_symbol_change:false,
-
-container_id:"chart"
-
-});
-
-};
-
-document.body.appendChild(script);
-
-},[symbol]);
-
-
 return(
 
 <div style={{
-
 background:"#0f1117",
-
 minHeight:"100vh",
-
 padding:"20px",
-
 color:"white"
-
 }}>
 
 <h1 style={{fontSize:"28px"}}>
-
 Live Indian Index Charts
-
 </h1>
 
 
 <div style={{
-
 display:"flex",
-
-gap:"20px",
-
+gap:"10px",
 marginTop:"20px",
-
 flexWrap:"wrap"
-
 }}>
 
 <button onClick={()=>setSymbol("NSE:NIFTY")}>NIFTY</button>
@@ -97,7 +41,21 @@ flexWrap:"wrap"
 
 </div>
 
-<div id="chart" style={{marginTop:"20px"}}></div>
+
+<div style={{
+marginTop:"20px",
+height:"600px"
+}}>
+
+<iframe
+key={symbol}
+src={`https://www.tradingview.com/widgetembed/?symbol=${symbol}&interval=5&theme=dark&style=1&timezone=Asia/Kolkata`}
+width="100%"
+height="100%"
+frameBorder="0"
+/>
+
+</div>
 
 </div>
 
